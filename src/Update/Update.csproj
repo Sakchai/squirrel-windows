@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <Description>Update</Description>
+    <Title>Update</Title>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="rcedit.exe" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="signtool.exe" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="update.com" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\vendor\nuget\src\Core\Core.csproj" />
+    <ProjectReference Include="..\Squirrel\Squirrel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WpfAnimatedGif" Version="1.4.15.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ILRepack" Version="1.26.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <PostBuildEvent>
+      cd "$(TargetDir)"
+      "$(NuGetPackageRoot)ilrepack\1.26.0\tools\ILRepack.exe" /internalize /out:$(TargetFileName).tmp $(TargetFileName) WpfAnimatedGif.dll SharpCompress.dll Microsoft.Web.XmlTransform.dll Squirrel.dll NuGet.Squirrel.dll Mono.Cecil.dll
+      del "$(TargetFileName)"
+      ren "$(TargetFileName).tmp" "$(TargetFileName)"
+    </PostBuildEvent>
+  </PropertyGroup>
+
+</Project>

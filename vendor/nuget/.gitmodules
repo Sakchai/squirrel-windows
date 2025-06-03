@@ -1,0 +1,3 @@
+[submodule "xdt"]
+	path = xdt
+	url = https://github.com/mrward/xdt
