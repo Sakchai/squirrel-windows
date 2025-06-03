@@ -8,7 +8,7 @@ Squirrel.Windows is a fairly typical C# / C++ project, the only special part is 
 For the Impatient:
 
 ```sh
-git clone https://github.com/squirrel/squirrel.windows
+git clone https://github.com/squirrel/squirrel-windows
 cd squirrel.windows
 git submodule update --init --recursive       ## THIS IS THE PART YOU PROBABLY FORGOT
 devbuild.cmd
